@@ -3,20 +3,49 @@
 
 # Django CRM
 
-A simple Customer Relationship Management (CRM) web application built with Django. This project provides basic user authentication (login, logout, registration) and is set up to use a MySQL database. The UI uses Bootstrap for a clean and responsive design.
+A simple Customer Relationship Management (CRM) web application built with Django. This project provides user authentication (login, logout, registration) and basic CRUD for customer records, using a MySQL database. The UI uses Bootstrap for a clean and responsive design.
 
 ## Features
 
-- User registration with username, email, first name, last name, and password
-- User login and logout
-- Flash messages for authentication feedback
+- User registration, login, and logout (with flash messages)
+- View all customer records (home page)
+- Add, update, delete, and view individual records (CRUD)
 - Responsive Bootstrap-based interface
 - MySQL database integration
 
 ## Project Structure
 
 ```
-<code_block_to_apply_changes_from>
+crm/
+├── crm/                  # Django project settings, URLs, WSGI/ASGI
+│   ├── __init__.py
+│   ├── asgi.py
+│   ├── settings.py
+│   ├── urls.py
+│   └── wsgi.py
+├── website/              # Main Django app
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── apps.py
+│   ├── forms.py
+│   ├── migrations/
+│   │   ├── __init__.py
+│   │   └── 0001_initial.py
+│   ├── models.py
+│   ├── templates/
+│   │   ├── add_record.html
+│   │   ├── base.html
+│   │   ├── home.html
+│   │   ├── navbar.html
+│   │   ├── record.html
+│   │   ├── register.html
+│   │   └── update_record.html
+│   ├── tests.py
+│   ├── urls.py
+│   └── views.py
+├── mydb.py               # Script to create the MySQL database
+├── manage.py             # Django management script
+└── readme.md             # Project documentation
 ```
 
 ## Setup Instructions
@@ -31,7 +60,7 @@ A simple Customer Relationship Management (CRM) web application built with Djang
 ### 1. Clone the Repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/abhijithgkrishna/crm
 cd CRM/crm
 ```
 
@@ -79,11 +108,22 @@ python manage.py runserver
 
 Visit [http://localhost:8000/](http://localhost:8000/) in your browser.
 
+## Available Routes
+
+- `/` : Home page (login form and list of records)
+- `/register` : User registration
+- `/logout` : Log out
+- `/record/<int:pk>` : View a single record (login required)
+- `/add_record` : Add a new record (login required)
+- `/update_record/<int:pk>` : Update a record (login required)
+- `/delete_record/<int:pk>` : Delete a record (login required)
+
 ## Usage
 
-- **Home Page:** Login form for existing users.
+- **Home Page:** Login form for existing users and a list of all records.
 - **Register:** Create a new user account.
 - **Logout:** Log out of the application.
+- **Add/Update/Delete/View Record:** Manage customer records (requires login).
 
 Navigation is available via the top navbar.
 
@@ -91,9 +131,11 @@ Navigation is available via the top navbar.
 
 - Add your own CRM models in `website/models.py`.
 - Extend views and templates to add CRM features (contacts, leads, etc.).
+- Adjust forms in `website/forms.py` for custom fields.
 
 ## Security Notes
 
 - The default database credentials are for development only. Change them for production.
 - The Django `SECRET_KEY` in settings is for development. Generate a new one for production.
 - Set `DEBUG = False` and configure `ALLOWED_HOSTS` before deploying.
+- Use strong, unique passwords for all accounts.
